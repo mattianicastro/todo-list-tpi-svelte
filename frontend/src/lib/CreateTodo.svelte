@@ -37,7 +37,7 @@
 </script>
 <div class="form-control">
     <label class="input-group">
-      <input type="text" placeholder="Insert new todo" class="input input-bordered" on:keypress={handleKeyPress} bind:value={content} />
+      <input type="text" placeholder="Insert new todo" class="input input-bordered input-ghost text-primary-content " on:keypress={handleKeyPress} bind:value={content} />
       <button class="btn flex-grow" on:click={addTodo}>+</button>
     </label>
 </div>
