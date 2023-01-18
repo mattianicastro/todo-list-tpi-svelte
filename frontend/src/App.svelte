@@ -24,8 +24,7 @@ import { onMount } from 'svelte'
   {#if user}
     <TodoContainer />
   {:else}
-  <a href={import.meta.env.VITE_API_URL+"/login"} class="btn btn-block">Login</a>
-
+    <a href={import.meta.env.VITE_API_URL+"/login"} class="btn btn-block">Login</a>
   {/if}
 
 </div>

@@ -52,16 +52,6 @@ def get_cursor():
     cur = con.cursor()
     return cur
 
-
-@app.route("/")
-def index():
-    return "Hello World"
-    # if current_user.is_authenticated:
-    #     return f"<img src='{current_user.pic_url}' /><h1>{current_user.username}</h1><a href='/logout'>Logout</a>"
-    # else:
-    #     return f"<a href='/login'>Login</a>"
-
-
 @app.route("/login")
 def login():
     url = oauth_client.prepare_request_uri(
