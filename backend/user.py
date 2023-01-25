@@ -1,10 +1,4 @@
-import sqlite3
-
-
-def get_cursor():
-    con = sqlite3.connect("taskdb.db")
-    cur = con.cursor()
-    return cur
+from db import con
 
 
 class User:
@@ -15,10 +9,9 @@ class User:
 
     @staticmethod
     def get(user_id):
-        cur = get_cursor()
-        user = cur.execute(
-            "SELECT * FROM users WHERE user_id = ?", (user_id,)
-        ).fetchone()
+        cur = con.cursor()
+        cur.execute("SELECT * FROM users WHERE user_id = %s", (str(user_id),))
+        user = cur.fetchone()
         if not user:
             return None
 
@@ -27,9 +20,10 @@ class User:
 
     @staticmethod
     def create(user_id, username, pic_url):
-        cur = get_cursor()
+        cur = con.cursor()
+
         cur.execute(
-            "INSERT INTO users (user_id, username, pic_url) VALUES (?, ?, ?)",
-            (user_id, username, pic_url),
+            "INSERT INTO users (user_id, username, pic_url) VALUES (%s, %s, %s)",
+            (str(user_id), username, pic_url),
         )
-        cur.connection.commit()
+        con.commit()

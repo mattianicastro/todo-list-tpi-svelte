@@ -8,7 +8,5 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-RUN python create_db.py
-
-CMD ["gunicorn", "--bind", "0.0.0.0:8080", "main:app"]
+CMD ["sh", "run.sh"]
 
