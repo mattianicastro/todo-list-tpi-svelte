@@ -1,10 +1,13 @@
 <script lang="ts">
-    import { createEventDispatcher } from "svelte";
     import { getCookie } from "../utils";
+    import { todosStore } from "../stores";
     let content
-	const dispatch = createEventDispatcher();
 
     async function addTodo(){
+        if (!content) {
+            return
+        }
+        const frozenContent = content
         const response = await fetch(import.meta.env.VITE_API_URL + '/tasks', {
             method: 'PUT',
             headers: {
@@ -12,7 +15,7 @@
                 'X-CSRF-TOKEN': getCookie('csrf_access_token'),                
             },
             body: JSON.stringify({
-                content
+                content: frozenContent
             }),
             credentials: 'include'
         })
@@ -22,10 +25,10 @@
         const data = await response.json()
         const todo = {
             id: data.id,
-            content: content,
+            content: frozenContent,
             done: false
         } as TodoObj
-        dispatch('addTask', todo)
+        todosStore.update(todos => [...todos, todo])
         content = ''
     }
 

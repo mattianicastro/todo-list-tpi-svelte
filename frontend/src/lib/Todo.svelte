@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { createEventDispatcher } from "svelte";
+    import { todosStore } from "../stores";
     import { getCookie } from "../utils";
 
     export let content
@@ -8,9 +8,14 @@
 
     let editing = false
 
-    const dispatch = createEventDispatcher();
 
     async function setTaskDone() {
+        todosStore.update(todos => todos.map(todo => {
+            if(todo.id === id) {
+                todo.done = done
+            }
+            return todo
+        }))
         const response = await fetch(import.meta.env.VITE_API_URL + '/tasks/' + id, {
             method: 'PATCH',
             headers: {
@@ -39,10 +44,16 @@
         if(response.status !== 200) {
             return
         }
-        dispatch('deleteTask', id)
+        todosStore.update(todos => todos.filter(todo => todo.id !== id))
     }
 
     async function updateContent(){
+      todosStore.update(todos => todos.map(todo => {
+        if(todo.id === id) {
+          todo.content = content
+        }
+        return todo
+      }))
       const response = await fetch(import.meta.env.VITE_API_URL + '/tasks/' + id, {
                 method: 'PATCH',
                 headers: {
