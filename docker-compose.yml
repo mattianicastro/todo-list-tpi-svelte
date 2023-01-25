@@ -27,6 +27,7 @@ services:
       - OAUTHLIB_INSECURE_TRANSPORT="true"
       - FRONTEND_DOMAIN=${BASE_URL}
       - FRONTEND_URL=https://${BASE_URL}
+      - DATABASE_URL=postgres://postgres:postgres@postgres/postgres
   postgres:
     image: postgres:15.1
     restart: unless-stopped
