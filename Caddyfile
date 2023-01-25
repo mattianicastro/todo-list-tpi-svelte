@@ -1,0 +1,10 @@
+{$API_URL} {
+    tls internal
+    reverse_proxy backend:8080
+}
+
+{$BASE_URL} {
+    tls internal
+    root * /srv
+    file_server
+}
